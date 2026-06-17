@@ -1,0 +1,45 @@
+# 凭证 —— 绝不入库
+.ccvar.env
+.claude-auth.env
+*.env
+
+# 运行日志 / 运行时状态
+automation/logs/
+automation/pending-publish.tsv
+automation/.publishing
+automation/.runstatus
+sites/*/.runstatus
+
+# 多站：每站运行时缓存与草稿（site.env 已被 *.env 覆盖，不入库）
+sites/*/drafts/
+sites/*/.recent-published.tsv
+sites/*/.publishing
+sites/*/pending-publish.tsv
+
+# 发行包 / 备份（由 make-template.sh 生成，可重建）
+dist/
+*.tgz
+*.zip
+
+# 构建产物（由 build/ 源码或 install.sh 重新生成）
+*.app/
+build/CCVARHelper
+build/render-cover
+build/AppIcon.icns
+build/AppIcon.iconset/
+build/*.png
+build/err.txt
+build/cov-err.txt
+
+# 临时草稿
+drafts/
+*.tmp
+
+# Python
+__pycache__/
+*.pyc
+
+# 机器相关
+.claude/settings.local.json
+.DS_Store
+automation/.recent-published.tsv

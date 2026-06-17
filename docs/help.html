@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CCVAR 撰稿助手 · 使用帮助（新手必读）</title>
+<style>
+ body{max-width:860px;margin:0 auto;padding:32px 22px 100px;font:16px/1.75 -apple-system,system-ui,'PingFang SC',sans-serif;color:#1d1d1f;background:#fff}
+ h1{font-size:30px;margin-bottom:6px} h2{font-size:21px;margin-top:2.2em;border-left:4px solid #9a3b2f;padding-left:12px;scroll-margin-top:16px}
+ h3{font-size:17px;margin-top:1.5em}
+ a{color:#9a3b2f}
+ .lead{background:#faf3f1;border:1px solid #e9d3cd;border-radius:12px;padding:16px 18px;color:#5a3a34}
+ code{background:#f0f0f0;padding:2px 6px;border-radius:5px;font-size:14px}
+ table{border-collapse:collapse;width:100%;margin:12px 0;font-size:15px}
+ th,td{border:1px solid #e5e5e5;padding:8px 10px;text-align:left;vertical-align:top}
+ th{background:#f7f7f7}
+ .btn{display:inline-block;background:#eef0f2;border:1px solid #d7dadd;border-radius:6px;padding:0 7px;font-size:13px;white-space:nowrap}
+ .ok{color:#1a7f37;font-weight:600}.warn{color:#bf5b00;font-weight:600}.bad{color:#cf222e;font-weight:600}
+ ul li,ol li{margin:5px 0} .muted{color:#777;font-size:14px}
+ .step{background:#f6f8fa;border-radius:10px;padding:12px 16px;margin:10px 0}
+ .toc{background:#fafafa;border:1px solid #eee;border-radius:10px;padding:14px 18px;font-size:15px;columns:2}
+ .toc a{text-decoration:none} .toc li{margin:3px 0}
+ .note{background:#fff8e6;border:1px solid #f0e3b8;border-radius:10px;padding:10px 14px;font-size:14px;color:#6a5a20}
+ .dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:4px}
+</style></head><body>
+
+<h1>CCVAR 撰稿助手 · 使用帮助</h1>
+<p class="lead">一句话：这个软件让 <b>AI 替你给网站写内容 → 审核 → 发布</b>，支持<b>文章、链接、页面</b>三类内容，可以接到<b>一个或多个</b>你自己的网站。你只要点几下，或者干脆托管成全自动。<b>默认只生成草稿、绝不偷偷发布</b>——发布永远由你点头（除非你自己开了全自动）。</p>
+
+<div class="toc"><b>目录</b>
+<ul>
+<li><a href="#start">一、第一次用（3 步上手）</a></li>
+<li><a href="#three">二、三大能力总览</a></li>
+<li><a href="#menu">三、菜单各项</a></li>
+<li><a href="#posts">四、文章：选题怎么定 ⭐</a></li>
+<li><a href="#pages">五、页面：批量起草</a></li>
+<li><a href="#links">六、链接：贴网址 AI 补全</a></li>
+<li><a href="#mode">七、发布模式 / 否决窗口</a></li>
+<li><a href="#review">八、待审 / 预览 / 发布</a></li>
+<li><a href="#settings">九、设置（全局 vs 本站）</a></li>
+<li><a href="#engine">十、AI 引擎：登录 / 状态灯</a></li>
+<li><a href="#params">十一、内容参数 / 语种</a></li>
+<li><a href="#sites">十二、多站点</a></li>
+<li><a href="#safety">十三、安全底线</a></li>
+<li><a href="#move">十四、换电脑 / 发给别人</a></li>
+<li><a href="#faq">十五、常见问题排错</a></li>
+</ul>
+</div>
+
+<h2 id="start">一、第一次用（3 步上手）</h2>
+<p>菜单栏图标在<b>屏幕右上角</b>（一个小图标）。点它展开菜单。</p>
+<div class="step"><b>① 配置 AI 引擎</b>：菜单 → <span class="btn">全局设置…</span> → 看底部「AI 引擎」。把 Claude、GPT 至少一个点<b>「登录…」</b>按钮（图标）授权登录（详见<a href="#engine">第十节</a>）。两盏灯变<span class="ok">绿</span>就是配好了。</div>
+<div class="step"><b>② 添加你的网站</b>：菜单 → <span class="btn">站点管理…</span> → 填【名称 / API 域名 / API 密钥】→「添加站点」。域名形如 <code>https://你的站.com/api/admin/v1</code>；密钥需含 <b>publish 权限</b>才能发布。</div>
+<div class="step"><b>③ 定位 + 选题</b>：加站后会问「要不要校准网站定位」——站上<b>已有发布文章</b>就选「AI 校准」（自动读文章填好定位）；<b>全新空站</b>选「手动填写」，照模板示例填（见<a href="#posts">第四节</a>）。</div>
+<p>之后就会<b>每天自动写一篇文章草稿</b>（默认手动模式：写好等你发）。也可随时点 <span class="btn">立刻撰稿一篇</span>。</p>
+
+<h2 id="three">二、三大能力总览</h2>
+<p>同一个网站，AI 能帮你产三类内容，<b>各走各的、各自配置、互不干扰</b>：</p>
+<table>
+<tr><th>能力</th><th>是什么</th><th>怎么触发</th><th>去哪审/发</th></tr>
+<tr><td><b>文章</b></td><td>博客长文（有选题、可带代码示例）</td><td>每天<b>自动</b>写一篇，或点「立刻撰稿一篇」</td><td>「待审草稿」</td></tr>
+<tr><td><b>链接</b></td><td>外链收录（你给网址，AI 写标题+介绍+分类）</td><td><b>按需</b>：本站设置→链接→「生成」</td><td>「待审链接」</td></tr>
+<tr><td><b>页面</b></td><td>固定页面（关于、服务说明…）</td><td><b>按需</b>：本站设置→页面→「起草这些页面」</td><td>「待审页面」</td></tr>
+</table>
+<p class="muted">只有「文章」有每日定时；链接/页面是你点按钮才生成（低频、按需）。</p>
+
+<h2 id="menu">三、菜单各项</h2>
+<table>
+<tr><th>菜单项</th><th>作用</th></tr>
+<tr><td><b>每日自动撰稿：运行中/已暂停</b></td><td>顶部状态。下面一行是「上次/正在撰稿」的实时状态。</td></tr>
+<tr><td><b>站点：xxx</b></td><td>当前活动站。多站时点开可切换。</td></tr>
+<tr><td><b>立刻撰稿一篇</b></td><td>不等定时，马上写一篇文章。撰稿中右侧有<b>旋转图标</b>，菜单栏图标也会「呼吸」。</td></tr>
+<tr><td><b>待审草稿 / 待审页面 / 待审链接</b></td><td>等你处理的草稿。点开每条有<b>预览</b>（浏览器看效果，不发布）和<b>确认发布上线</b>。</td></tr>
+<tr><td><b>待发布（自动）</b></td><td>仅半自动/全自动出现：过审、排队等到点自动发。<b>点一条=取消</b>。</td></tr>
+<tr><td><b>最近发布</b></td><td>最近已上线的内容，点开在网站上查看。</td></tr>
+<tr><td><b>编辑选题…</b></td><td>打开选题库 <code>topics.md</code>，决定 AI 写什么文章（<a href="#posts">第四节</a>，最重要）。</td></tr>
+<tr><td><b>校准网站定位…</b></td><td>让 AI 读站内已发布文章，自动校准「网站定位」并补几个新选题。</td></tr>
+<tr><td><b>本站设置… / 全局设置…</b></td><td>两类设置，分开（<a href="#settings">第九节</a>）。</td></tr>
+<tr><td><b>站点管理…</b></td><td>添加/移除站点、改密钥（后面括号是站点数量）。</td></tr>
+<tr><td><b>最近运行日志…</b></td><td>一个<b>实时刷新</b>的窗口，看每次撰稿/审核/发布发生了什么（排错必看）。</td></tr>
+</table>
+
+<h3>待审草稿的图标含义（彩色图标，非表情）</h3>
+<ul>
+<li><span class="ok">绿色印章勾</span>：主编<b>建议发布</b>，后面带评分（如「·8分」）。</li>
+<li><span class="warn">橙色三角叹号</span>：主编觉得<b>需要你看一眼</b>再定。</li>
+<li><span class="bad">红色八角叉</span>：主编<b>不建议发</b>。</li>
+<li><span class="muted">灰色文档</span>：<b>还没审</b>（手动模式不会自动审）。</li>
+</ul>
+<p class="muted">子菜单顶部有「图例」对照同样的图标。标题太长会截断成「…」，鼠标悬停看完整标题和主编意见。条目很多时只列最近若干条，点「打开完整清单」看全部。</p>
+
+<h2 id="posts">四、文章：选题怎么定 ⭐</h2>
+<p>这是你最该掌握的。点 <span class="btn">编辑选题…</span> 打开 <code>topics.md</code>，里面三块：</p>
+<table>
+<tr><th>区块</th><th>作用</th><th>你怎么用</th></tr>
+<tr><td><b>网站定位</b></td><td>告诉 AI「这网站是干嘛的、给谁看、什么调性」。</td><td>用一段话描述。AI 据此把握风格、补题。</td></tr>
+<tr><td><b>写作方向</b><br>(主题范围 = 边界)</td><td>允许的题材范围。AI <b>只在这些方向里</b>自动补题。</td><td>列几条方向，每行一个。<b>删一条，AI 就不写那类</b>了。</td></tr>
+<tr><td><b>待写队列</b></td><td>你<b>指定</b>要写的具体题目，从上往下取。</td><td>想写什么直接写一行。队列空了，AI 才按「写作方向」自己拟题。</td></tr>
+<tr><td><b>已写</b></td><td>历史记录（自动追加），用来防撞题。</td><td>不用管，自动维护。</td></tr>
+</table>
+<p>三种玩法<b>都支持</b>，取决于你填哪块：</p>
+<ul>
+<li><b>给具体题目</b> → 写进「待写队列」，AI 照着写。</li>
+<li><b>给范围让它发挥</b> → 只填「写作方向」、清空「待写队列」，AI 在范围内自己想题。</li>
+<li><b>只说网站是干嘛的</b> → 写好「网站定位」+「写作方向」，其余交给它。</li>
+</ul>
+<p class="note">偷懒法（推荐）：点 <b>「校准网站定位…」</b>，AI 读你站里已发布的文章，自动把「网站定位/写作方向」写准、并补几个没写过的新选题。内容多了随时再点一次重新校准。</p>
+
+<h2 id="pages">五、页面：批量起草（关于、服务说明…）</h2>
+<p>页面是<b>固定、少量</b>的门面内容，不该天天自动生成。做法：</p>
+<ol>
+<li>「本站设置」→ <b>页面</b> tab → 在框里每行写一个：<code>标题 | 这页讲什么</code>（例：<code>关于我们 | 团队、使命、联系方式</code>）。</li>
+<li>点 <b>「起草这些页面」</b> → AI 逐个写草稿（每个约一两分钟，菜单状态行可看进度）。</li>
+<li>去菜单 <b>「待审页面」</b> → 预览 → 确认发布。</li>
+</ol>
+<p class="muted">页面建议用「无计划」模式（纯手动·你审了再发，门面要把关）。生成成功的标题会在框里标成「# 已起草…」，<b>不会重复生成</b>；想重做就去掉前面的 <code>#</code>。</p>
+
+<h2 id="links">六、链接：贴网址，AI 补全</h2>
+<p>把外部网址收进你的「链接库」，AI 自动写好标题/介绍/分类：</p>
+<ol>
+<li>「本站设置」→ <b>链接</b> tab → 每行贴一个网址（可选 <code>网址 | 提示</code>）。</li>
+<li>勾选「增强」：<b>自动归类</b>（AI 选分类）、<b>自动配图</b>（生成封面，更费额度）。可设「介绍字数」。</li>
+<li>点 <b>「生成」</b> → 脚本先抓取每个网页的标题/摘要当素材，AI 据此写<b>标题 + 详细介绍 + 一句话摘要</b>，并选分类，建为草稿。</li>
+<li>去菜单 <b>「待审链接」</b> → 预览 → 发布（链接低风险，也可在链接 tab 设成<b>全自动=生成即发</b>）。</li>
+</ol>
+<p class="muted">AI <b>不会编造</b>网址——网址是你提供的真实地址，它只负责写描述、选分类。生成成功的网址同样会标成「# 已收录…」，不重复。</p>
+
+<h2 id="mode">七、发布模式 / 否决窗口</h2>
+<p>每类内容、每个站<b>各自</b>设发布模式（在「本站设置」对应 tab）：</p>
+<table>
+<tr><th>模式</th><th>含义</th></tr>
+<tr><td><b>手动</b>（文章）/ <b>无计划</b>（页面·链接）</td><td>只生成草稿，<b>等你手动点发布</b>。最稳，默认。</td></tr>
+<tr><td><b>半自动</b></td><td>生成（文章还会主编审核给建议）后，<b>进「待发布」等"否决窗口"小时数</b>，到点自动发；这段时间你可在「待发布」取消。</td></tr>
+<tr><td><b>全自动</b></td><td>文章=过审到点自动发；链接=<b>生成即发</b>。适合托管。</td></tr>
+</table>
+<ul>
+<li><b>否决窗口</b>：仅半自动/全自动用——过审后等几小时才真发，给你反悔时间。设 0 = 立即发。</li>
+<li><b>每日上限</b>：全局设置里，全自动每天最多发几篇（跨站合计），防失控。</li>
+<li><b>页面</b>没接自动发布，永远进「待审页面」等你手动发（门面需审）。</li>
+</ul>
+
+<h2 id="review">八、待审 / 预览 / 发布</h2>
+<ul>
+<li><b>预览</b>：点击后弹「生成中」小窗，好了自动在浏览器打开。优先用网站的<b>在线预览</b>（真站主题），不可用时回退本地排版页。<b>预览不发布</b>。</li>
+<li><b>确认发布上线</b>：会二次确认。发布是<b>公开动作</b>——需要你的密钥含 publish 权限。</li>
+<li><b>待发布（自动）</b>：半/全自动排队中的，点一条即<b>取消</b>。</li>
+</ul>
+
+<h2 id="settings">九、设置：全局 vs 本站</h2>
+<p>设置拆成两个窗口，别混：</p>
+<table>
+<tr><th>全局设置（所有站点共享）</th><th>本站设置（只作用当前站）</th></tr>
+<tr><td>每日撰稿时间<br>写作/审核<b>引擎</b>+型号（可混搭：GPT 写 + Claude 审）<br>Claude 令牌 / OpenAI Key<br>AI 引擎登录状态<br>AI 命令（高级逃生口，一般留空）</td><td>三个 tab：<b>文章 / 链接 / 页面</b><br>各自：发布模式、目标字数、增强（归类/配图/含代码示例）<br>文章还有：否决窗口、写作/译文语种<br>链接/页面：清单 + 生成按钮</td></tr>
+</table>
+<p class="muted">密钥不在「本站设置」里改了——去「站点管理」每个站后面的「改密钥」。</p>
+
+<h2 id="engine">十、AI 引擎：登录 / 安装 / 状态灯</h2>
+<p>「全局设置」底部「AI 引擎」一行有 Claude、GPT 两个引擎，右侧是<b>图标按钮</b>（鼠标悬停看文字）：</p>
+<ul>
+<li><span class="dot" style="background:#34c759"></span><b>绿灯</b>=已就绪。按钮变「切换账号」。</li>
+<li><span class="dot" style="background:#8e8e93"></span><b>灰灯</b>=装了但没登录。点<b>「登录」</b>（钥匙图标）→ 自动开终端走浏览器授权。
+  <ul><li>GPT：<code>codex login</code> 用 ChatGPT 登录（有免费额度），登录完点「重新检测」即可，<b>无需复制 key</b>。</li>
+  <li>Claude：<code>claude setup-token</code> 会在终端打印一串令牌，复制粘到上面「Claude 令牌」框（需 Claude 订阅账号）。</li></ul></li>
+<li><span class="dot" style="background:#ff9500"></span><b>橙灯</b>=没装命令。点<b>「安装」</b>（下载图标）看引导（用 <code>npm install -g</code> 装，需先有 Node.js）。</li>
+</ul>
+<p class="muted">配好哪个引擎就能用哪个。也可两个都配，写作/审核分别选不同引擎。</p>
+
+<h2 id="params">十一、内容参数 / 语种</h2>
+<ul>
+<li><b>目标字数</b>（文章/页面）/ <b>介绍字数</b>（链接）：填了 AI 按这个长度写；<b>留空=用默认</b>（文章 1500-2200、页面 500-1200、链接 2-4 句）。</li>
+<li><b>含代码示例</b>（文章）：默认开；非技术站可关掉。</li>
+<li><b>自动归类</b>：让 AI 选最贴切的目录/分类。</li>
+<li><b>自动配图</b>：生成品牌封面图（更费额度，默认关）。</li>
+<li><b>写作语种</b>：写哪种语言（站点支持的语种自动列出）。</li>
+<li><b>译文方式 / 译文语种</b>：要不要额外产其它语种译文。<b>不勾任何译文语种 = 只写写作语种、不翻译</b>（此时「译文方式」自动置灰）。</li>
+</ul>
+
+<h2 id="sites">十二、多站点</h2>
+<ul>
+<li><b>各站平级</b>：每个站独立的密钥、选题、发布策略、三类内容队列；没有"主站"之分。</li>
+<li><b>切换</b>：菜单「站点：xxx」点开选另一个站。切换后菜单内容随之变成那个站的。</li>
+<li><b>添加/移除</b>：「站点管理」里加站、改密钥、移除（移除只是取消注册，数据文件保留；至少留一个站）。</li>
+<li><b>全局 vs 每站</b>：引擎/登录/时间是全局共享；密钥/选题/发布策略/字数是每站各自的。</li>
+</ul>
+
+<h2 id="safety">十三、安全底线</h2>
+<ul>
+<li><b>默认只生成草稿</b>，发布永远要你确认（或你主动开半/全自动）。</li>
+<li>密钥/令牌存在本地、权限 600、不进 Git，不外泄。</li>
+<li>半/全自动有「否决窗口」+「每日上限」兜底。</li>
+<li>AI 被严格限制：只通过本工具操作你的站、只碰内容工作文件、绝不动系统或其它文件。</li>
+</ul>
+
+<h2 id="move">十四、换电脑 / 发给别人</h2>
+<p><b>换自己的电脑</b>：拷<b>整个文件夹</b>（含密钥、配置、选题、脚本），在新机跑一次 <code>bash automation/install.sh</code>（重建定时器/自启/App），再各自登录 AI（<code>claude setup-token</code> / <code>codex login</code>）。</p>
+<p><b>发给别人</b>：跑 <code>bash automation/make-template.sh</code> 会在 <code>dist/</code> 生成一份<b>零站点、无密钥</b>的干净包（含 App + 快速开始.txt）。对方解压、配好 AI 与自己的站点即可用——不会带上你的任何数据。</p>
+
+<h2 id="faq">十五、常见问题排错</h2>
+<table>
+<tr><td><b>撰稿一直"处理中"/没产出</b></td><td>多半是引擎没登录。看「全局设置」灯是否绿；或菜单「最近运行日志」看报错。</td></tr>
+<tr><td><b>发布失败</b></td><td>密钥没有 publish 权限。去「站点管理→改密钥」换一个有发布权限的。</td></tr>
+<tr><td><b>菜单显示"还没有任何站点"</b></td><td>正常——还没加站。点「添加站点」即可。</td></tr>
+<tr><td><b>设置窗口按钮点不动</b></td><td>菜单栏应用偶发；本版已修。若仍遇到，关掉窗口重开。</td></tr>
+<tr><td><b>状态行文字被截断</b></td><td>鼠标悬停看全文；它会自动省略号，不会跑出菜单。</td></tr>
+<tr><td><b>"否决窗口=0"还有待发布</b></td><td>已修：veto=0 时过审即发，不再排队。</td></tr>
+<tr><td><b>预览打不开/很慢</b></td><td>会先弹"生成中"小窗；网络慢请稍候，好了自动打开。在线不可用会自动回退本地页。</td></tr>
+</table>
+<p class="muted" style="margin-top:2.5em">还有问题：菜单「最近运行日志…」是排错第一现场，撰稿/审核/发布的每一步都在里面。</p>
+</body></html>

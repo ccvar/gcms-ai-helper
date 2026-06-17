@@ -1,0 +1,23 @@
+{
+  "draft_hour": 14,
+  "draft_minute": 21,
+  "ai_cmd": "",
+  "model": "claude-sonnet-4-6",
+  "editor_model": "",
+  "langs_cache": [
+    {
+      "code": "zh",
+      "name": "中文",
+      "default": true
+    },
+    {
+      "code": "en",
+      "name": "English",
+      "default": false
+    }
+  ],
+  "writer_engine": "codex",
+  "editor_engine": "codex",
+  "codex_model": "",
+  "auto_daily_cap": 3
+}
