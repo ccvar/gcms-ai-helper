@@ -1,0 +1,57 @@
+name: 构建可运行包
+
+# 触发：
+#   · 推送形如 v1.67 的标签           → 构建并发布 Release（公开可下载）
+#   · 在 Actions 页手动 Run workflow   → 填版本号则发 Release；留空只生成构建产物
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: '版本号（如 v1.67）。填了就发布 Release 供公开下载；留空只生成构建产物。'
+        required: false
+        default: ''
+
+permissions:
+  contents: write   # 创建 Release 需要写权限
+
+jobs:
+  build:
+    runs-on: macos-14   # Apple Silicon runner；脚本会编译通用二进制兼容 Intel
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 构建 .app（通用二进制 arm64 + x86_64）
+        run: bash build/build-app.sh
+
+      - name: 打包干净可运行包（app + 脚本 + 文档，零站点·无密钥）
+        run: bash automation/make-template.sh
+
+      - name: 命名 zip
+        id: pkg
+        run: |
+          TAG="${{ github.event.inputs.release_tag }}"
+          if [ -z "$TAG" ] && [ "${{ github.ref_type }}" = "tag" ]; then TAG="${{ github.ref_name }}"; fi
+          SUFFIX="${TAG:-$(git rev-parse --short HEAD)}"
+          OUT="gcms-ai-helper-macos-${SUFFIX}.zip"
+          mv "dist/CCVAR撰稿助手.zip" "$OUT"
+          echo "zip=$OUT" >> "$GITHUB_OUTPUT"
+          echo "打好的包：$OUT（$(du -h "$OUT" | cut -f1)）"
+
+      - name: 上传构建产物（Actions 运行页可下载）
+        uses: actions/upload-artifact@v4
+        with:
+          name: gcms-ai-helper-macos
+          path: ${{ steps.pkg.outputs.zip }}
+          if-no-files-found: error
+
+      - name: 发布 Release（仅 tag 推送或填了版本号时）
+        if: github.ref_type == 'tag' || github.event.inputs.release_tag != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.inputs.release_tag || github.ref_name }}"
+          NOTES=$'macOS 菜单栏 AI 撰稿助手 · 下载即用包。\n\n安装：下载下方 zip → 解压 → 双击「CCVAR撰稿助手.app」。\n若提示「未受信任的开发者」：右键点 App →「打开」→ 再点「打开」（本包为临时签名，非 App Store 分发）。\n首次使用见包内「快速开始.txt」。'
+          gh release create "$TAG" "${{ steps.pkg.outputs.zip }}" --title "$TAG" --notes "$NOTES" \
+            || gh release upload "$TAG" "${{ steps.pkg.outputs.zip }}" --clobber

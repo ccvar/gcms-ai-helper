@@ -15,6 +15,7 @@ rm -rf "$DIST"; mkdir -p "$DEST"
 # 复制代码与资源；排除：版本库、所有站点数据、密钥、日志、运行缓存、备份、dist 自身
 rsync -a \
   --exclude '.git' \
+  --exclude '.github' \
   --exclude 'dist/' \
   --exclude 'sites/' \
   --exclude '*.env' \
