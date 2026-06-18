@@ -52,6 +52,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="${{ github.event.inputs.release_tag || github.ref_name }}"
-          NOTES=$'macOS 菜单栏 AI 撰稿助手 · 下载即用包。\n\n安装：下载下方 zip → 解压 → 双击「CCVAR撰稿助手.app」。\n若提示「未受信任的开发者」：右键点 App →「打开」→ 再点「打开」（本包为临时签名，非 App Store 分发）。\n首次使用见包内「快速开始.txt」。'
+          NOTES=$'macOS 菜单栏 AI 撰稿助手 · 下载即用包。\n\n【安装】下载下方 zip → 解压，得到「CCVAR撰稿助手」文件夹。\n\n【第一次打开 · 只需一次】本 App 未做苹果付费公证，首次会被 macOS 拦一下（正常安全提示，不是软件有问题）：\n· 最省事：双击文件夹里的「首次打开（解除拦截）.command」，自动解除并打开。\n· 或手动：右键点 App →「打开」→ 再点「打开」。\n· macOS 15+：若被拒，先双击一次 App，再到 系统设置 → 隐私与安全性 → 拉到底点「仍要打开」。\n\n打开后菜单栏右上角出现图标即成功。详见包内「快速开始.txt」。'
           gh release create "$TAG" "${{ steps.pkg.outputs.zip }}" --title "$TAG" --notes "$NOTES" \
             || gh release upload "$TAG" "${{ steps.pkg.outputs.zip }}" --clobber
