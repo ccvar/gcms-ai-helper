@@ -1,0 +1,4 @@
+# gcms_helper 运行依赖（仅托盘/界面需要；CLI 与核心仅用 Python 标准库 + ccvar.py）
+# tkinter 为标准库（Windows python.org 版自带；PyInstaller 会一并打包）
+pystray>=0.19
+pillow>=10.0

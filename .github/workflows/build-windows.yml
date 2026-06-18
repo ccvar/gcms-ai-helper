@@ -1,0 +1,67 @@
+name: 构建 Windows 包
+
+# 与 macOS 流水线同样的触发：tag v* 或手动 Run workflow（填版本号则发 Release）
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: '版本号（如 v1.0）。填了就发布 Release 供公开下载；留空只生成构建产物。'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 安装依赖（PyInstaller + 运行依赖）
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -r gcms_helper/requirements.txt
+
+      - name: PyInstaller 打包 gcms-helper.exe
+        run: >
+          pyinstaller --noconfirm --onefile --windowed --name gcms-helper
+          --paths .
+          --collect-submodules gcms_helper
+          --hidden-import pystray._win32
+          build/winmain.py
+
+      - name: 组装下载包（exe + ccvar.py + 配置 + prompts + 快速开始 + 定时任务）
+        id: pack
+        shell: bash
+        run: |
+          TAG="${{ github.event.inputs.release_tag }}"
+          if [ -z "$TAG" ] && [ "${{ github.ref_type }}" = "tag" ]; then TAG="${{ github.ref_name }}"; fi
+          SUFFIX="${TAG:-$(git rev-parse --short HEAD)}"
+          python build/pack_win.py --exe dist/gcms-helper.exe --out dist --version "$SUFFIX"
+          echo "zip=dist/gcms-ai-helper-windows-${SUFFIX}.zip" >> "$GITHUB_OUTPUT"
+
+      - name: 上传构建产物（Actions 运行页可下载）
+        uses: actions/upload-artifact@v4
+        with:
+          name: gcms-ai-helper-windows
+          path: ${{ steps.pack.outputs.zip }}
+          if-no-files-found: error
+
+      - name: 发布 Release（仅 tag 推送或填了版本号时）
+        if: github.ref_type == 'tag' || github.event.inputs.release_tag != ''
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.inputs.release_tag || github.ref_name }}"
+          NOTES=$'Windows 下载即用包（解压 → 双击 gcms-helper.exe → 右下角托盘）。\n首次运行被 SmartScreen 拦：点「更多信息」→「仍要运行」。\n需先装 Python(勾 Add to PATH) 与 Claude/Codex CLI，详见包内「快速开始.txt」。'
+          gh release create "$TAG" "${{ steps.pack.outputs.zip }}" --title "$TAG" --notes "$NOTES" \
+            || gh release upload "$TAG" "${{ steps.pack.outputs.zip }}" --clobber
