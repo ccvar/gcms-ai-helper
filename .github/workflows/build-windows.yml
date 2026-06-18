@@ -17,6 +17,8 @@ permissions:
 jobs:
   build-windows:
     runs-on: windows-latest
+    env:
+      PYTHONUTF8: "1"        # 让 Windows 上 Python 的 print 走 UTF-8，避免 cp1252 崩
     steps:
       - uses: actions/checkout@v4
 

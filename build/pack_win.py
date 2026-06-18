@@ -7,6 +7,7 @@
 import argparse
 import json
 import shutil
+import sys
 import zipfile
 from pathlib import Path
 
@@ -105,6 +106,12 @@ def zip_pkg(pkg: Path, out_dir: Path, version: str) -> Path:
 
 
 def main():
+    # Windows 控制台默认 cp1252，print 中文/emoji 会崩；强制 UTF-8 输出
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
     ap = argparse.ArgumentParser()
     ap.add_argument("--exe", default=str(ROOT / "dist" / "gcms-helper.exe"))
     ap.add_argument("--out", default=str(ROOT / "dist"))
