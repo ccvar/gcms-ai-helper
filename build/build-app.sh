@@ -10,13 +10,13 @@ APP="$PROJ/$NAME.app"
 cd "$PROJ/build"
 
 echo "==> 编译 menubar.swift"
-if swiftc menubar.swift -target arm64-apple-macos11  -o /tmp/helper-arm64  2>/tmp/sw-arm.log \
-&& swiftc menubar.swift -target x86_64-apple-macos11 -o /tmp/helper-x86_64 2>/tmp/sw-x86.log; then
+if swiftc menubar.swift -target arm64-apple-macos12  -o /tmp/helper-arm64  2>/tmp/sw-arm.log \
+&& swiftc menubar.swift -target x86_64-apple-macos12 -o /tmp/helper-x86_64 2>/tmp/sw-x86.log; then
   lipo -create -output CCVARHelper /tmp/helper-arm64 /tmp/helper-x86_64
   echo "    通用二进制：$(lipo -archs CCVARHelper)"
 else
-  echo "    交叉编译不可用，改用本机架构 ($(uname -m))"
-  swiftc menubar.swift -o CCVARHelper
+  echo "    交叉编译不可用，改用本机架构 ($(uname -m)) @ macos12"
+  swiftc menubar.swift -target "$(uname -m)-apple-macos12" -o CCVARHelper
 fi
 
 echo "==> 组装 $NAME.app"

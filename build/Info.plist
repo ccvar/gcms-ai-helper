@@ -9,9 +9,9 @@
   <key>CFBundleIdentifier</key>
   <string>com.ccvar.menubar</string>
   <key>CFBundleVersion</key>
-  <string>1.67</string>
+  <string>1.68</string>
   <key>CFBundleShortVersionString</key>
-  <string>1.67</string>
+  <string>1.68</string>
   <key>CFBundleExecutable</key>
   <string>CCVARHelper</string>
   <key>CFBundlePackageType</key>
@@ -21,7 +21,7 @@
   <key>LSUIElement</key>
   <true/>
   <key>LSMinimumSystemVersion</key>
-  <string>11.0</string>
+  <string>12.0</string>
   <key>NSHumanReadableCopyright</key>
   <string>CCVAR 简记</string>
 </dict>

@@ -2,7 +2,7 @@ import AppKit
 
 // 项目根目录 = App 所在目录（App 在项目根里）。这样整体迁移也能定位。
 let projDir = (Bundle.main.bundlePath as NSString).deletingLastPathComponent
-let appBuild = "版本 1.67 · ccvar"
+let appBuild = "版本 1.68 · ccvar"
 let defaultAICmd = "claude -p \"$CCVAR_PROMPT\" --permission-mode default --allowedTools \"Bash(python3 ccvar.py:*)\" \"Read\" \"Write\" \"Edit\" \"Bash(ls:*)\" \"Bash(wc:*)\" \"Bash(find:*)\" \"Bash(grep:*)\" --output-format text"
 let modelTitles = ["默认（跟随全局）", "Opus 4.8（最强）", "Opus 4.7", "Opus 4.6", "Sonnet 4.6（性价比）", "Haiku 4.5（最快）"]
 let modelValues = ["", "claude-opus-4-8", "claude-opus-4-7", "claude-opus-4-6", "claude-sonnet-4-6", "claude-haiku-4-5"]
